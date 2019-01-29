@@ -1,0 +1,76 @@
+August 2016
+
+- x64 stack management
+  https://piazza.com/class/inq0a4lklrq6tq?cid=188
+- test for unicode characters (probably cut+paste from PDF)
+
+
+----------------------------------------------------------------------
+April 2016
+- Alloy/Jasmin jar ordering issue
+- Lab4 suggestions from k26lau
+- new x86-64 lab from Jackson
+
+
+
+----------------------------------------------------------------------
+Either remove DetermineInputVars dependency on PostOrderExprVisitor or
+... clean up the visitor issue with Lab7 and this code dependency.
+
+----------------------------------------------------------------------
+Make AndExpr(a,b) isomorphic to NaryAndExpr(a,b)
+
+----------------------------------------------------------------------
+automated testing tools? Randoop? Korat?
+
+----------------------------------------------------------------------
+unify lexical spec for var names for VHDL, F, and W
+
+----------------------------------------------------------------------
+FExprVisitor.traverse() methods are not returning the correct results,
+so tree rewriting visitors do not work. See InlineIntermediateVars.
+
+Should FExprVisitor be changed so it doesn't modify the tree?
+
+----------------------------------------------------------------------
+whitespace issue for W
+
+rename w.svg.TestEquivalent etc
+
+Expr.hasChildren()
+Expr.getChildren()
+
+lab3 + lab6: AlloyConverter depends on PostOrderFExprVisitor, which
+doesn't get implemented until lab7
+
+consolidate test harness code
+
+get Eclipse JUnit runner to print test names instead of just index numbers
+
+----------------------------------------------------------------------
+c73chan@uwaterloo.ca
+8:38 PM (1 hour ago)
+
+to derek.rayside 
+Hi Prof. Rayside,
+
+We talked in class about using the visit() methods in the TechnologyMapper to also compute the gates rather than just the edges.  I think such a design would make the code easier to read since you don't have to do any sort of type-checking or iteration over HashMaps.  You mentioned that this could hurt maintenance if this was done in the real world though.  I was thinking something along these lines:
+
+        @Override
+        public Expr visit(final NaryAndExpr e) {
+
+                // Draw the gate
+                node(substitutions.get(e).nameID(), "", substitutions.get(e).operator() + "_noleads.png");
+
+                for ( Expr temp : e.children ) {
+                        edge( temp, e );
+                }
+                return e;
+        }
+
+This way we don't have to iterate through the substitutions HashMap or do type checking.  To make this even more general, could we also change the type of "e" to NaryExpr since the calculation for all NaryExpr are the same?
+
+What are your thoughts on this?
+
+Thank you,
+Carl
